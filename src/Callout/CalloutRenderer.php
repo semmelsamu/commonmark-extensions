@@ -20,31 +20,30 @@ final class CalloutRenderer implements NodeRendererInterface
         Callout::assertInstanceOf($node);
 
         $icon = $node->getIcon();
-
         $title = $node->title ?? ucfirst($node->type);
-
         $type = strtolower($node->type);
-
         $content = $childRenderer->renderNodes($node->children());
+
+        $titleHtml = new HtmlElement(
+            'div',
+            ['class' => 'callout-title flex items-center gap-2'],
+            [
+                new HtmlElement('i', ['class' => "callout-icon {$icon}"], '', false),
+                new HtmlElement('strong', ['class' => 'callout-title-inner'], $title, false)
+            ],
+            false
+        );
+
+        $contentHtml = new HtmlElement(
+            'div',
+            ['class' => 'callout-content'],
+            $content
+        );
 
         return new HtmlElement(
             'blockquote',
-            [
-                'class' => "callout callout-{$type}",
-            ],
-            Blade::render(
-                '
-                <div class="callout-title flex items-center gap-2">
-                    <x-icon :name="$icon" class="callout-icon" />
-                    <strong class="callout-title-inner">
-                        {{ $title }}
-                    </strong>
-                </div>
-                <div class="callout-content">
-                    {!! $content !!}
-                </div>',
-                ['icon' => $icon, 'title' => $title, 'content' => $content]
-            )
+            ['class' => "callout callout-{$type}"],
+            [$titleHtml, $contentHtml]
         );
     }
 }

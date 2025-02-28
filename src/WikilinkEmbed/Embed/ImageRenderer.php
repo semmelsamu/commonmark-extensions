@@ -22,16 +22,26 @@ class ImageRenderer implements NodeRendererInterface
         $src = (string) $node->src;
         $caption = $node->caption;
 
-        $result = Blade::render("<x-image src='{$src}' />");
+        $imageHtml = new HtmlElement(
+            'img',
+            [
+                'src' => $src,
+                'alt' => $caption ?? '',
+                'class' => 'image-embed'
+            ],
+            '',
+            false
+        );
 
         $result = new HtmlElement(
             'a',
             ['href' => $src, 'target' => '_blank'],
-            $result
+            $imageHtml
         );
 
-        if (!isset($caption))
+        if (!isset($caption)) {
             return $result;
+        }
 
         return new HtmlElement(
             'figure',

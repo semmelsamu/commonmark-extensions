@@ -32,16 +32,18 @@ class CodeHighlightingExtension implements ExtensionInterface, NodeRendererInter
 
         try {
             $language = $node->getInfo();
-
             $highlighted = $this->highlighter->highlight($language, $node->getLiteral());
 
-            $result =  "<pre><code class=\"hljs {$highlighted->language}\">";
+            $result = "<pre><code class=\"hljs {$highlighted->language}\">";
             $result .= $highlighted->value;
             $result .= "</code></pre>";
 
             return $result;
         } catch (\Exception $e) {
-            return Blade::render("<pre><code>{{ \$node->getLiteral() }}</code></pre>", ["node" => $node]);
+            return sprintf(
+                '<pre><code>%s</code></pre>',
+                htmlspecialchars($node->getLiteral(), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')
+            );
         }
     }
 }
