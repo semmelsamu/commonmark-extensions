@@ -1,0 +1,19 @@
+{
+    "name": "semmelsamu/commonmark-extensions",
+    "description": "Custom Markdown extensions for CommonMark PHP",
+    "type": "library",
+    "require": {
+        "league/commonmark": "^2.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Semmelsamu\\CommonmarkExtensions\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Samuel Kroiß",
+            "email": "mail@samuelkroiss.de"
+        }
+    ]
+}
