@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MarkdownExtensions\Callout;
+namespace Semmelsamu\CommonmarkExtensions\Callout;
 
 use League\CommonMark\Parser\Block\BlockStart;
 use League\CommonMark\Parser\Block\BlockStartParserInterface;

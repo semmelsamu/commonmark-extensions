@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MarkdownExtensions\WikilinkEmbed\Embed;
+namespace Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed;
 
 use League\CommonMark\Renderer\NodeRendererInterface;
 use League\CommonMark\Util\HtmlElement;

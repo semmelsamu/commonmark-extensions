@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MarkdownExtensions\Wikilink;
+namespace Semmelsamu\CommonmarkExtensions\Wikilink;
 
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;

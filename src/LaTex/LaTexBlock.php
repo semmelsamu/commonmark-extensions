@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MarkdownExtensions\LaTex;
+namespace Semmelsamu\CommonmarkExtensions\LaTex;
 
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Node\StringContainerInterface;

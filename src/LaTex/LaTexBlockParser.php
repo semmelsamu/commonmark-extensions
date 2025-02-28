@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MarkdownExtensions\LaTex;
+namespace Semmelsamu\CommonmarkExtensions\LaTex;
 
 use League\CommonMark\Node\Block\AbstractBlock;
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
@@ -34,7 +34,7 @@ final class LaTexBlockParser extends AbstractBlockContinueParser
     }
 
     /**
-     * This method returns whether or not the block is a “container” capable of 
+     * This method returns whether or not the block is a "container" capable of 
      * containing other blocks as children.
      */
     public function isContainer(): bool

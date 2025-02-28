@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MarkdownExtensions\WikilinkEmbed;
+namespace Semmelsamu\CommonmarkExtensions\WikilinkEmbed;
 
 use App\MarkdownExtensions\WikilinkEmbed\Embed\Embed;
 use App\MarkdownExtensions\WikilinkEmbed\Embed\EmbedRenderer;

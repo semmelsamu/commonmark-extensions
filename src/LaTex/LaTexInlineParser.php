@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MarkdownExtensions\LaTex;
+namespace Semmelsamu\CommonmarkExtensions\LaTex;
 
 use League\CommonMark\Parser\Inline\InlineParserInterface;
 use League\CommonMark\Parser\Inline\InlineParserMatch;

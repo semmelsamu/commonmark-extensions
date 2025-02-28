@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MarkdownExtensions\WikilinkEmbed;
+namespace Semmelsamu\CommonmarkExtensions\WikilinkEmbed;
 
 use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;

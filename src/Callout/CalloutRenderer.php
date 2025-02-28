@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MarkdownExtensions\Callout;
+namespace Semmelsamu\CommonmarkExtensions\Callout;
 
 use Illuminate\Support\Facades\Blade;
 use League\CommonMark\Node\Node;

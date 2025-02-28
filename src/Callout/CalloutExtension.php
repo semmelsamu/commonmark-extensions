@@ -1,6 +1,6 @@
 <?php
 
-namespace App\MarkdownExtensions\Callout;
+namespace Semmelsamu\CommonmarkExtensions\Callout;
 
 use League\CommonMark\Extension\ExtensionInterface;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
