@@ -3,7 +3,8 @@
     "description": "Custom Markdown extensions for CommonMark PHP",
     "type": "library",
     "require": {
-        "league/commonmark": "^2.6"
+        "league/commonmark": "^2.6",
+        "scrivo/highlight.php": "^9.18"
     },
     "autoload": {
         "psr-4": {
