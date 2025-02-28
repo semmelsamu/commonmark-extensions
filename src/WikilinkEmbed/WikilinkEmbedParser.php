@@ -8,9 +8,9 @@ use League\CommonMark\Parser\Block\AbstractBlockContinueParser;
 use League\CommonMark\Parser\Block\BlockContinue;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
 use League\CommonMark\Parser\Cursor;
-use App\MarkdownExtensions\WikilinkEmbed\Embed\Image;
 use League\CommonMark\Node\Block\AbstractBlock;
-use App\MarkdownExtensions\WikilinkEmbed\Embed\Embed;
+use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed\Embed;
+use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed\Image;
 
 class WikilinkEmbedParser extends AbstractBlockContinueParser
 {

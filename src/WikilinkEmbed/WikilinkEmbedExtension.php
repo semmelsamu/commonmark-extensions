@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Semmelsamu\CommonmarkExtensions\WikilinkEmbed;
 
-use App\MarkdownExtensions\WikilinkEmbed\Embed\Embed;
-use App\MarkdownExtensions\WikilinkEmbed\Embed\EmbedRenderer;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
-use App\MarkdownExtensions\WikilinkEmbed\Embed\Image;
-use App\MarkdownExtensions\WikilinkEmbed\Embed\ImageRenderer;
+use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed\Embed;
+use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed\EmbedRenderer;
+use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed\Image;
+use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed\ImageRenderer;
 
 final class WikilinkEmbedExtension implements ConfigurableExtensionInterface
 {
