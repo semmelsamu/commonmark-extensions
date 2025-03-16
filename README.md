@@ -56,6 +56,14 @@ TODO: Add Wikilink resolver
 
 TODO: Additional to Wikilink resolver, add custom embed rednerers
 
+## Testing
+
+Run
+
+```bash
+./vendor/bin/phpunit --do-not-cache-result
+```
+
 ## License
 
 This project is licenced under the MIT license. See the [`LICENSE`](LICENSE) file for more information.
