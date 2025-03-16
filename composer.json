@@ -6,9 +6,17 @@
         "league/commonmark": "^2.6",
         "scrivo/highlight.php": "^9.18"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^12.0"
+    },
     "autoload": {
         "psr-4": {
             "Semmelsamu\\CommonmarkExtensions\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Semmelsamu\\CommonmarkExtensions\\Tests\\": "tests/"
         }
     },
     "authors": [
