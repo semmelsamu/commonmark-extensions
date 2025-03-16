@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Semmelsamu\CommonmarkExtensions\Callout;
 
-use Illuminate\Support\Facades\Blade;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
@@ -12,6 +11,13 @@ use League\CommonMark\Util\HtmlElement;
 
 final class CalloutRenderer implements NodeRendererInterface
 {
+    private $renderIcon;
+
+    public function __construct(callable $renderIcon)
+    {
+        $this->renderIcon = $renderIcon;
+    }
+
     /**
      * @param Callout $node
      */
@@ -19,16 +25,15 @@ final class CalloutRenderer implements NodeRendererInterface
     {
         Callout::assertInstanceOf($node);
 
-        $icon = $node->getIcon();
-        $title = $node->title ?? ucfirst($node->type);
         $type = strtolower($node->type);
+        $title = $node->title ?? ucfirst($type);
         $content = $childRenderer->renderNodes($node->children());
 
         $titleHtml = new HtmlElement(
             'div',
             ['class' => 'callout-title flex items-center gap-2'],
             [
-                new HtmlElement('i', ['class' => "callout-icon {$icon}"], '', false),
+                ($this->renderIcon)($type),
                 new HtmlElement('strong', ['class' => 'callout-title-inner'], $title, false)
             ],
             false
