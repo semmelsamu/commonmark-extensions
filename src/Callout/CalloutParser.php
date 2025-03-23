@@ -15,8 +15,6 @@ final class CalloutParser extends AbstractBlockContinueParser
     /** @psalm-readonly */
     private Callout $block;
 
-    // private string $type;
-
     public function __construct($type, $title)
     {
         $this->block = new Callout($type, $title);
