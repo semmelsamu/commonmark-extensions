@@ -21,10 +21,7 @@ final class WikilinkEmbedExtension implements ConfigurableExtensionInterface
                 return $wikilink;
             }),
             'renderers' => Expect::arrayOf(
-                Expect::structure([
-                    'pattern' => Expect::string()->required(),
-                    'renderer' => Expect::callable()->required()
-                ])
+                Expect::callable()->required()
             )->default([])
         ]));
     }
@@ -37,10 +34,9 @@ final class WikilinkEmbedExtension implements ConfigurableExtensionInterface
             $config['resolve']
         ), 100);
 
-        foreach ($config['renderers'] as $rendererConfig) {
+        foreach ($config['renderers'] as $renderer) {
             $environment->addRenderer(Embed::class, new EmbedCustomRenderer(
-                $rendererConfig['pattern'],
-                $rendererConfig['renderer']
+                $renderer
             ), 100);
         }
 

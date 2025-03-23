@@ -10,12 +10,10 @@ use League\CommonMark\Node\Node;
 
 class EmbedCustomRenderer implements NodeRendererInterface
 {
-    private string $pattern;
     private $renderer;
 
-    public function __construct(string $pattern, callable $renderer)
+    public function __construct(callable $renderer)
     {
-        $this->pattern = $pattern;
         $this->renderer = $renderer;
     }
 
@@ -24,12 +22,6 @@ class EmbedCustomRenderer implements NodeRendererInterface
      */
     public function render(Node $node, ChildNodeRendererInterface $childRenderer)
     {
-        Embed::assertInstanceOf($node);
-
-        if (preg_match($this->pattern, $node->src)) {
-            return ($this->renderer)($node->src, $node->caption);
-        }
-
-        return null; // Let other renderers handle this
+        return ($this->renderer)($node->src, $node->caption);
     }
 }

@@ -17,12 +17,12 @@ class WikilinkEmbedCustomRendererTest extends CommonMarkTest
             'wikilink_embed' => [
                 'resolve' => fn(string $wikilink) => $wikilink,
                 'renderers' => [
-                    [
-                        'pattern' => '/\.(jpg|jpeg|png|gif)$/i',
-                        'renderer' => function (string $source, ?string $caption) {
-                            return sprintf('<img src="%s" alt="%s">', $source, $caption ?? '');
+                    function (string $source, ?string $caption) {
+                        if (!preg_match('/\.(jpg|jpeg|png|gif)$/i', $source)) {
+                            return null;
                         }
-                    ]
+                        return sprintf('<img src="%s" alt="%s">', $source, $caption ?? '');
+                    }
                 ]
             ]
         ], [
