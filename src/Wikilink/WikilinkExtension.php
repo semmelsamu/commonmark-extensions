@@ -13,15 +13,17 @@ class WikilinkExtension implements ConfigurableExtensionInterface
 {
     public function configureSchema(ConfigurationBuilderInterface $builder): void
     {
-        $builder->addSchema('resolve_wikilink', Expect::callable(function (string $wikilink) {
-            return $wikilink;
-        }));
+        $builder->addSchema('wikilink', Expect::structure([
+            'resolve' => Expect::callable()->default(function (string $wikilink) {
+                return $wikilink;
+            })
+        ]));
     }
 
     public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment->addInlineParser(new WikilinkParser(
-            $environment->getConfiguration()->get('resolve_wikilink')
+            $environment->getConfiguration()->get('wikilink.resolve')
         ), 50);
     }
 }

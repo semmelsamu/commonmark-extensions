@@ -17,15 +17,17 @@ final class WikilinkEmbedExtension implements ConfigurableExtensionInterface
 {
     public function configureSchema(ConfigurationBuilderInterface $builder): void
     {
-        $builder->addSchema('resolve_wikilink', Expect::callable(function (string $wikilink) {
-            return $wikilink;
-        }));
+        $builder->addSchema('wikilink_embed', Expect::structure([
+            'resolve' => Expect::callable()->default(function (string $wikilink) {
+                return $wikilink;
+            })
+        ]));
     }
 
     public function register(EnvironmentBuilderInterface $environment): void
     {
         $environment->addBlockStartParser(new WikilinkEmbedStartParser(
-            $environment->getConfiguration()->get('resolve_wikilink')
+            $environment->getConfiguration()->get('wikilink_embed.resolve')
         ), 100);
 
         $environment->addRenderer(Image::class, new ImageRenderer(), 100);
