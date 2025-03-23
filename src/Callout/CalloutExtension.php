@@ -2,18 +2,20 @@
 
 namespace Semmelsamu\CommonmarkExtensions\Callout;
 
-use League\CommonMark\Extension\ExtensionInterface;
+use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 
-final class CalloutExtension implements ExtensionInterface
+final class CalloutExtension implements ConfigurableExtensionInterface
 {
     public function configureSchema(ConfigurationBuilderInterface $builder): void
     {
-        $builder->addSchema('render_icon', Expect::callable(function (string $callout_type) {
-            return $callout_type;
-        }));
+        $builder->addSchema('callout', Expect::structure([
+            'render_icon' => Expect::callable()->default(function (string $callout_type) {
+                return $callout_type;
+            })
+        ]));
     }
 
     public function register(EnvironmentBuilderInterface $environment): void
@@ -21,7 +23,7 @@ final class CalloutExtension implements ExtensionInterface
         $environment
             ->addBlockStartParser(new CalloutStartParser(), 80)
             ->addRenderer(Callout::class, new CalloutRenderer(
-                $environment->getConfiguration()->get('render_icon')
+                $environment->getConfiguration()->get('callout.render_icon')
             ));
     }
 }
