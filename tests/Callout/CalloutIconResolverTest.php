@@ -29,7 +29,7 @@ class CalloutIconResolverTest extends CommonMarkTest
 
         $expected = <<<'HTML'
         <blockquote class="callout callout-note">
-            <div class="callout-title flex items-center gap-2">
+            <div class="callout-title">
                 <i>NOTE ICON</i>
                 <strong class="callout-title-inner">Note</strong>
             </div>

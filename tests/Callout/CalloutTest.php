@@ -23,7 +23,7 @@ class CalloutTest extends CommonMarkTest
 
         $expected = <<<'HTML'
         <blockquote class="callout callout-note">
-            <div class="callout-title flex items-center gap-2">
+            <div class="callout-title">
                 note
                 <strong class="callout-title-inner">Note</strong>
             </div>
@@ -47,7 +47,7 @@ class CalloutTest extends CommonMarkTest
 
         $expected = <<<'HTML'
         <blockquote class="callout callout-warning">
-            <div class="callout-title flex items-center gap-2">
+            <div class="callout-title">
                 warning
                 <strong class="callout-title-inner">Warning</strong>
             </div>
@@ -75,7 +75,7 @@ class CalloutTest extends CommonMarkTest
 
         $expected = <<<'HTML'
         <blockquote class="callout callout-tip">
-            <div class="callout-title flex items-center gap-2">
+            <div class="callout-title">
                 tip
                 <strong class="callout-title-inner">Tip</strong>
             </div>

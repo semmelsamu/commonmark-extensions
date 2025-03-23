@@ -31,7 +31,7 @@ final class CalloutRenderer implements NodeRendererInterface
 
         $titleHtml = new HtmlElement(
             'div',
-            ['class' => 'callout-title flex items-center gap-2'],
+            ['class' => 'callout-title'],
             [
                 ($this->renderIcon)($type),
                 new HtmlElement('strong', ['class' => 'callout-title-inner'], $title, false)
