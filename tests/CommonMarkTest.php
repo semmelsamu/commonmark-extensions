@@ -8,7 +8,6 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase;
-use Semmelsamu\CommonmarkExtensions\Callout\CalloutExtension;
 
 /**
  * Utility class which provides some boilerplate for asserting rendered HTML
@@ -16,13 +15,16 @@ use Semmelsamu\CommonmarkExtensions\Callout\CalloutExtension;
  */
 class CommonMarkTest extends TestCase
 {
-    private MarkdownConverter $converter;
+    protected MarkdownConverter $converter;
 
-    protected function setUp(): void
+    protected function configureEnvironment(array $config = [], array $extensions = []): void
     {
-        $environment = new Environment();
+        $environment = new Environment($config);
+
         $environment->addExtension(new CommonMarkCoreExtension());
-        $environment->addExtension(new CalloutExtension());
+        foreach ($extensions as $extension) {
+            $environment->addExtension($extension);
+        }
 
         $this->converter = new MarkdownConverter($environment);
     }

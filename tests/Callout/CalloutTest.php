@@ -5,9 +5,15 @@ declare(strict_types=1);
 namespace Semmelsamu\CommonmarkExtensions\Tests\Callout;
 
 use Semmelsamu\CommonmarkExtensions\Tests\CommonMarkTest;
+use Semmelsamu\CommonmarkExtensions\Callout\CalloutExtension;
 
 class CalloutTest extends CommonMarkTest
 {
+    protected function setUp(): void
+    {
+        parent::configureEnvironment(extensions: [new CalloutExtension()]);
+    }
+
     public function testBasicCallout(): void
     {
         $markdown = <<<'MARKDOWN'
