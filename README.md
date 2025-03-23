@@ -12,53 +12,122 @@ Custom extensions for the [CommonMark PHP](https://commonmark.thephpleague.com/)
 
 TODO: Upload to Packagist
 
-This library is available through [Composer](https://getcomposer.org/). You can install it using the following command:
-
-```bash
-composer require semmelsamu/commonmark-extensions
-```
-
 ## Setup
-
-TODO: Register in Environment
 
 ```php
 use League\CommonMark\Environment\Environment;
-use Semmelsamu\CommonMark
 
 // Create the converter environment:
 $environment = new Environment($config);
 
 // Add the extensions you wish:
-$environment->addExtension(new InlinesOnlyExtension());
+$environment->addExtension(new CommonmarkExtension());
 
 // Go forth and convert you some Markdown!
 $converter = new MarkdownConverter($environment);
 ```
 
+## Usage
+
 ### Callout
 
-TODO: Register Icon Resolver/Renderer
+```php
+use Semmelsamu\CommonmarkExtensions\Callout\CalloutExtension;
+```
+
+You may want to configure the extension:
+
+```php
+$config = [
+    "callout" => [
+        "render_icon" => fn(string) => string;
+    ],
+    // other configuration ...
+]
+```
+
+-   `render_icon` - A closure expecting the callout type and returning valid HTML which will be rendered as the icon of the callout.
 
 ### CodeHighlighting
 
-TODO: Add css stylesheet to frontend
+```php
+use Semmelsamu\CommonmarkExtensions\CodeHighlighting\CodeHighlightingExtension;
+```
+
+You may want to download one of the various [highlight.js themes](https://highlightjs.org/examples) in order to actually see any code highlighting, as **this extension does not apply any colors to the code by itself, it only applies CSS classes**. Download the css files [here](https://github.com/highlightjs/highlight.js/tree/main/src/styles) and load them in your HTML.
 
 ### LaTex
 
-TODO: Probably add LaTex Renderer (like MathJax) to frontend
+```php
+use Semmelsamu\CommonmarkExtensions\LaTex\LaTexExtension;
+```
+
+You may want to download a LaTex highlighting engine like [MathJax](https://www.mathjax.org/), as **this extension does not render LaTex, but escapes it**. Use the code below to load MathJax into your HTML:
+
+```html
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [
+                ["$", "$"],
+                ["\\(", "\\)"],
+            ],
+            displayMath: [["$$", "$$"]],
+        },
+        options: {
+            enableMenu: false,
+        },
+    };
+</script>
+<script
+    id="MathJax-script"
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+></script>
+```
 
 ### Wikilink
 
-TODO: Add Wikilink resolver
+```php
+use Semmelsamu\CommonmarkExtensions\Wikilink\WikilinkExtension;
+```
+
+You may want to configure the extension:
+
+```php
+$config = [
+    'wikilink' => [
+        'resolve' => fn (string) => string
+    ]
+]
+```
+
+-   `resolve` - A closure expecting the wikilink text and returning the resolved href value which will be used in the `<a>` tag.
 
 ### WikilinkEmbed
 
-TODO: Additional to Wikilink resolver, add custom embed rednerers
+```php
+use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\WikilinkEmbedExtension;
+```
+
+You may want to configure the extension:
+
+```php
+$config = [
+    'wikilink_embed' => [
+        'resolve' => fn(string) => string,
+        'renderers' => [
+            fn (string, ?string) => string,
+            // ...
+        ]
+    ]
+];
+```
+
+-   `resolve` - A closure expecting the wikilink text and returning the resolved href value which will be used in the `<a>` tag.
+-   `renderers` - An array consisting of closures expecting the wikilink and a possible caption and returning valid HTML which will be rendered as the wikilink content.
 
 ## Testing
-
-Run
 
 ```bash
 ./vendor/bin/phpunit --do-not-cache-result
