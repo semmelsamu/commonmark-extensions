@@ -15,6 +15,6 @@ class LaTexInlineRenderer implements NodeRendererInterface
             throw new \InvalidArgumentException('Wrong node type');
         }
 
-        return " <span class='latex'>$" . $node->getExpression() . "$</span>";
+        return '<span class="latex-inline">$' . $node->getExpression() . '$</span>';
     }
 }

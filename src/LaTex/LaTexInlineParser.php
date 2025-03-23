@@ -11,7 +11,7 @@ class LaTexInlineParser implements InlineParserInterface
     /**
      * @var string Matches any string enclosed in single dollar signs
      */
-    const INLINE_LATEX_REGEX = '[^\$]\$([^\$]+?)\$';
+    const INLINE_LATEX_REGEX = '\$([^\$]+?)\$';
 
     public function getMatchDefinition(): InlineParserMatch
     {
