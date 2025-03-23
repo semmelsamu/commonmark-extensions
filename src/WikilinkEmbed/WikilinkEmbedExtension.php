@@ -8,10 +8,9 @@ use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
-use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed\Embed;
-use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed\EmbedRenderer;
-use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed\Image;
-use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed\ImageRenderer;
+use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed;
+use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\EmbedCustomRenderer;
+use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\EmbedFallbackRenderer;
 
 final class WikilinkEmbedExtension implements ConfigurableExtensionInterface
 {
@@ -20,17 +19,31 @@ final class WikilinkEmbedExtension implements ConfigurableExtensionInterface
         $builder->addSchema('wikilink_embed', Expect::structure([
             'resolve' => Expect::callable()->default(function (string $wikilink) {
                 return $wikilink;
-            })
+            }),
+            'renderers' => Expect::arrayOf(
+                Expect::structure([
+                    'pattern' => Expect::string()->required(),
+                    'renderer' => Expect::callable()->required()
+                ])
+            )->default([])
         ]));
     }
 
     public function register(EnvironmentBuilderInterface $environment): void
     {
+        $config = $environment->getConfiguration()->get('wikilink_embed');
+
         $environment->addBlockStartParser(new WikilinkEmbedStartParser(
-            $environment->getConfiguration()->get('wikilink_embed.resolve')
+            $config['resolve']
         ), 100);
 
-        $environment->addRenderer(Image::class, new ImageRenderer(), 100);
-        $environment->addRenderer(Embed::class, new EmbedRenderer(), 100);
+        foreach ($config['renderers'] as $rendererConfig) {
+            $environment->addRenderer(Embed::class, new EmbedCustomRenderer(
+                $rendererConfig['pattern'],
+                $rendererConfig['renderer']
+            ), 100);
+        }
+
+        $environment->addRenderer(Embed::class, new EmbedFallbackRenderer(), 100);
     }
 }

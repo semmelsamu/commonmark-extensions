@@ -10,7 +10,6 @@ use League\CommonMark\Parser\Block\BlockContinueParserInterface;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Node\Block\AbstractBlock;
 use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed\Embed;
-use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed\Image;
 
 class WikilinkEmbedParser extends AbstractBlockContinueParser
 {
@@ -18,12 +17,7 @@ class WikilinkEmbedParser extends AbstractBlockContinueParser
 
     public function __construct(string $source, ?string $caption)
     {
-        $extension = pathinfo($source, PATHINFO_EXTENSION);
-
-        $this->block = match ($extension) {
-            "jpg", "png" => new Image($source, $caption),
-            default => new Embed($source, $caption),
-        };
+        $this->block = new Embed($source, $caption);
     }
 
     public function getBlock(): AbstractBlock

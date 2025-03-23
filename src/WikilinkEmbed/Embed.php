@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed;
+namespace Semmelsamu\CommonmarkExtensions\WikilinkEmbed;
 
 use League\CommonMark\Node\Block\AbstractBlock;
 
