@@ -9,7 +9,7 @@ use League\CommonMark\Parser\Block\BlockContinue;
 use League\CommonMark\Parser\Block\BlockContinueParserInterface;
 use League\CommonMark\Parser\Cursor;
 use League\CommonMark\Node\Block\AbstractBlock;
-use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed\Embed;
+use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed;
 
 class WikilinkEmbedParser extends AbstractBlockContinueParser
 {

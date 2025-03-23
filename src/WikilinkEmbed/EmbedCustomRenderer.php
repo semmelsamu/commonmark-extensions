@@ -11,7 +11,7 @@ use League\CommonMark\Node\Node;
 class EmbedCustomRenderer implements NodeRendererInterface
 {
     private string $pattern;
-    private callable $renderer;
+    private $renderer;
 
     public function __construct(string $pattern, callable $renderer)
     {
