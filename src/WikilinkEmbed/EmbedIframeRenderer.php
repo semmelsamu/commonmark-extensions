@@ -9,7 +9,7 @@ use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Node\Node;
 use League\CommonMark\Util\HtmlElement;
 
-class EmbedFallbackRenderer implements NodeRendererInterface
+class EmbedIframeRenderer implements NodeRendererInterface
 {
     /**
      * @param Embed $node
@@ -18,14 +18,17 @@ class EmbedFallbackRenderer implements NodeRendererInterface
     {
         Embed::assertInstanceOf($node);
 
+        $attributes = [
+            'src' => $node->src
+        ];
+
+        if ($node->caption) {
+            $attributes['title'] = $node->caption;
+        }
+
         return new HtmlElement(
-            'div',
-            ['class' => 'embed'],
-            new HtmlElement(
-                'a',
-                ['href' => $node->src, 'target' => '_blank'],
-                $node->caption ?? $node->src
-            )
+            'iframe',
+            $attributes
         );
     }
 }

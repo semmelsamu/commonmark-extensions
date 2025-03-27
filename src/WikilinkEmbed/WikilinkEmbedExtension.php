@@ -9,7 +9,7 @@ use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed;
-use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\EmbedFallbackRenderer;
+use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\EmbedIframeRenderer;
 
 final class WikilinkEmbedExtension implements ConfigurableExtensionInterface
 {
@@ -30,6 +30,6 @@ final class WikilinkEmbedExtension implements ConfigurableExtensionInterface
             $config['resolve']
         ), 100);
 
-        $environment->addRenderer(Embed::class, new EmbedFallbackRenderer(), -100);
+        $environment->addRenderer(Embed::class, new EmbedIframeRenderer(), -100);
     }
 }
