@@ -12,14 +12,12 @@ use League\CommonMark\Parser\Cursor;
 
 final class LaTexBlockParser extends AbstractBlockContinueParser
 {
-    const REGEX_LATEX_END = '/\$\$/';
-
     /** @psalm-readonly */
     private LaTexBlock $block;
 
     private string $content = '';
 
-    public function __construct()
+    public function __construct(private bool $isOneLine)
     {
         $this->block = new LaTexBlock();
     }
@@ -57,7 +55,7 @@ final class LaTexBlockParser extends AbstractBlockContinueParser
      */
     public function addLine(string $line): void
     {
-        $this->content .= rtrim($line, "$");
+        $this->content .= trim($line, "$");
     }
 
     /**
@@ -65,7 +63,11 @@ final class LaTexBlockParser extends AbstractBlockContinueParser
      */
     public function tryContinue(Cursor $cursor, BlockContinueParserInterface $activeBlockParser): ?BlockContinue
     {
-        if ($cursor->match(self::REGEX_LATEX_END)) {
+        if ($this->isOneLine) {
+            return BlockContinue::finished();
+        }
+
+        if ($cursor->match('/\$\$/')) {
             return BlockContinue::finished();
         }
 

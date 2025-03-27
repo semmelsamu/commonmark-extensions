@@ -9,8 +9,6 @@ use League\CommonMark\Parser\MarkdownParserStateInterface;
 
 class LaTexBlockStartParser implements BlockStartParserInterface
 {
-    const REGEX_LATEX_START = '/\$\$/';
-    const REGEX_LATEX_END = '/\$\$/';
     /**
      * Check whether we should handle the block at the current position
      *
@@ -21,20 +19,22 @@ class LaTexBlockStartParser implements BlockStartParserInterface
      */
     public function tryStart(Cursor $cursor, MarkdownParserStateInterface $parserState): ?BlockStart
     {
-        if ($cursor->getNextNonSpaceCharacter() != "$") {
+        if ($cursor->isIndented()) {
             return BlockStart::none();
         }
 
         $cursor->advanceToNextNonSpaceOrTab();
 
-        if (! $cursor->match(self::REGEX_LATEX_START))
-            return BlockStart::none();
-
-        // This parser does not handle one line latex blocks
-        if ($cursor->match(self::REGEX_LATEX_END)) {
+        if ($cursor->getCharacter(0) !== '$' || $cursor->getCharacter(1) !== '$') {
             return BlockStart::none();
         }
 
-        return BlockStart::of(new LaTexBlockParser())->at($cursor);
+        $cursor->advanceBy(2);
+
+        $state = $cursor->saveState();
+        $isOneLine = $cursor->match('/\$\$$/') != null;
+        $cursor->restoreState($state);
+
+        return BlockStart::of(new LaTexBlockParser($isOneLine))->at($cursor);
     }
 }
