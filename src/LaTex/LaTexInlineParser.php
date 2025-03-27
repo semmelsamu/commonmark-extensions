@@ -20,6 +20,12 @@ class LaTexInlineParser implements InlineParserInterface
 
     public function parse(InlineParserContext $context): bool
     {
+        // Offset 1 = second character
+        // If the second character is also a $, it's not inline, it's a block
+        if ($context->getCursor()->getCharacter(1) == '$') {
+            return false;
+        }
+
         $match = $context->getSubMatches();
         $context->getContainer()->appendChild(new LaTexInline($match[0]));
         $context->getCursor()->advanceBy(strlen($context->getFullMatch()));
