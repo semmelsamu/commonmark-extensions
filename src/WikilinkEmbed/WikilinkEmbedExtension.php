@@ -9,7 +9,6 @@ use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\Embed;
-use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\EmbedCustomRenderer;
 use Semmelsamu\CommonmarkExtensions\WikilinkEmbed\EmbedFallbackRenderer;
 
 final class WikilinkEmbedExtension implements ConfigurableExtensionInterface
@@ -19,10 +18,7 @@ final class WikilinkEmbedExtension implements ConfigurableExtensionInterface
         $builder->addSchema('wikilink_embed', Expect::structure([
             'resolve' => Expect::callable()->default(function (string $wikilink) {
                 return $wikilink;
-            }),
-            'renderers' => Expect::arrayOf(
-                Expect::callable()->required()
-            )->default([])
+            })
         ]));
     }
 
@@ -34,12 +30,6 @@ final class WikilinkEmbedExtension implements ConfigurableExtensionInterface
             $config['resolve']
         ), 100);
 
-        foreach ($config['renderers'] as $renderer) {
-            $environment->addRenderer(Embed::class, new EmbedCustomRenderer(
-                $renderer
-            ), 100);
-        }
-
-        $environment->addRenderer(Embed::class, new EmbedFallbackRenderer(), 100);
+        $environment->addRenderer(Embed::class, new EmbedFallbackRenderer(), -100);
     }
 }
