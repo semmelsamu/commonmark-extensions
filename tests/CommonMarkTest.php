@@ -46,11 +46,13 @@ class CommonMarkTest extends TestCase
         $trimmedHtml = trim($html);
 
         // Remove newlines and indentations
-        $noNewLines = preg_replace("/\s*\n\s*/", '', $trimmedHtml);
+        $noNewLines = preg_replace('/\s*\n\s*/', '', $trimmedHtml);
 
         // From this processed string, we can now add in some newlines in between tags
         $result = str_replace(">", ">\n", $noNewLines);
         $result = str_replace("<", "\n<", $result);
+
+        $result = preg_replace('/\s*\n\s*/', "\n", $result);
 
         return trim($result);
     }
