@@ -10,7 +10,13 @@ Custom extensions for the [CommonMark PHP](https://commonmark.thephpleague.com/)
 
 ## Installation
 
-TODO: Upload to Packagist
+You can install this package with [Composer](https://getcomposer.org/) (recommended):
+
+```bash
+composer require semmelsamu/commonmark-extensions
+```
+
+Alternatively (not recommended), refer to the latest stable [release](https://github.com/semmelsamu/commonmark-extensions/releases) and download the source code manually.
 
 ## Setup
 
@@ -115,17 +121,45 @@ You may want to configure the extension:
 ```php
 $config = [
     'wikilink_embed' => [
-        'resolve' => fn(string) => string,
-        'renderers' => [
-            fn (string, ?string) => string,
-            // ...
-        ]
+        'resolve' => fn(string) => string
     ]
 ];
 ```
 
 -   `resolve` - A closure expecting the wikilink text and returning the resolved href value which will be used in the `<a>` tag.
--   `renderers` - An array consisting of closures expecting the wikilink and a possible caption and returning valid HTML which will be rendered as the wikilink content.
+
+As a fallback, this extension already provides a basic iframe renderer for Embeds. You may add your own renderers with higher priority to extend this functionality. The example below shows an image renderer, so that images can also be written as wikilinks:
+
+```php
+/**
+ * Don't forget to also add this renderer to your environment:
+ * `$environment->addRenderer(new WikilinkEmbedImageRenderer())`
+ */
+class WikilinkEmbedImageRenderer implements NodeRendererInterface
+{
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    {
+        Embed::assertInstanceOf($node);
+
+        if (!preg_match('/\.(jpg|jpeg|png|gif)$/i', $src)) {
+            // Not an image, let this embed be handled by some other renderer
+            return null;
+        }
+
+        $attributes = ['href' => $node->src];
+
+        if ($node->caption) {
+            $attributes['alt'] = $node->caption;
+        }
+
+        return new HtmlElement(
+            'image',
+            $attributes
+        );
+    }
+}
+
+```
 
 ## Testing
 
