@@ -21,9 +21,7 @@ class WikilinkEmbedTest extends CommonMarkTest
         MARKDOWN;
 
         $expected = <<<'HTML'
-        <div class="embed">
-            <a href="document.pdf" target="_blank">document.pdf</a>
-        </div>
+        <iframe src="document.pdf"></iframe>
         HTML;
 
         $this->assertMarkdown($markdown, $expected);
@@ -36,9 +34,7 @@ class WikilinkEmbedTest extends CommonMarkTest
         MARKDOWN;
 
         $expected = <<<'HTML'
-        <div class="embed">
-            <a href="document.pdf" target="_blank">View PDF Document</a>
-        </div>
+        <iframe src="document.pdf" title="View PDF Document"></iframe>
         HTML;
 
         $this->assertMarkdown($markdown, $expected);
