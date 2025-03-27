@@ -44,4 +44,9 @@ class IntegrationTest extends CommonMarkTest
 
         $this->assertMarkdown($markdown, $expectedHtml);
     }
+
+    public function testVektor(): void
+    {
+        $this->assertMarkdownFile('Vektor');
+    }
 }
